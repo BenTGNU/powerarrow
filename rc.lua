@@ -15,25 +15,25 @@ awful.util.spawn_with_shell("wmname LG3D")
 --{{---| Error handling |---------------------------------------------------------------------------
 
 if awesome.startup_errors then
-naughty.notify({ preset = naughty.config.presets.critical,
-title = "Oops, there were errors during startup!",
-text = awesome.startup_errors })
+  naughty.notify({ preset = naughty.config.presets.critical,
+  title = "Oops, there were errors during startup!",
+  text = awesome.startup_errors })
 end
 do
-local in_error = false
-awesome.add_signal("debug::error", function (err)
+  local in_error = false
+  awesome.add_signal("debug::error", function (err)
 if in_error then return end
-in_error = true
-naughty.notify({ preset = naughty.config.presets.critical,
-title = "Oops, an error happened!",
-text = err })
-in_error = false
+  in_error = true
+  naughty.notify({ preset = naughty.config.presets.critical,
+  title = "Oops, an error happened!",
+  text = err })
+  in_error = false
 end)
 end
 
 --{{---| Theme |------------------------------------------------------------------------------------
 
-config_dir = ("/home/rom/.config/awesome/")
+config_dir = ("$HOME/.config/awesome/")
 themes_dir = (config_dir .. "/themes")
 beautiful.init(themes_dir .. "/powerarrow/theme.lua")
 
@@ -92,8 +92,8 @@ end
 --{{---| Menu |-------------------------------------------------------------------------------------
 
 myawesomemenu = {
-  {"edit config",           "terminal -x vim /home/rom/.config/awesome/rc.lua"},
-  {"edit theme",            "terminal -x vim /home/rom/.config/awesome/themes/powerarrow/theme.lua"},
+  {"edit config",           "terminal -x emacsclient -t $HOME/.config/awesome/rc.lua"},
+  {"edit theme",            "terminal -x emacsclient -t $HOME/.config/awesome/themes/powerarrow/theme.lua"},
   {"hibernate",             "sudo pm-hibernate"},
   {"restart",               awesome.restart },
   {"reboot",                "sudo reboot"},
@@ -326,10 +326,10 @@ function () awful.util.spawn_with_shell(chat) end)))
 
 --{{---| Mail widget |------------------------------------------------------------------------------
 
-mailicon = widget ({type = "imagebox" })
-mailicon.image = image(beautiful.widget_mail)
-mailicon:buttons(awful.util.table.join(awful.button({ }, 1, 
-function () awful.util.spawn_with_shell(mailmutt) end)))
+--mailicon = widget ({type = "imagebox" })
+--mailicon.image = image(beautiful.widget_mail)
+--mailicon:buttons(awful.util.table.join(awful.button({ }, 1, 
+--function () awful.util.spawn_with_shell(mailmutt) end)))
 
 --{{---| Music widget |-----------------------------------------------------------------------------
 
@@ -346,10 +346,10 @@ music:buttons(awful.util.table.join(
 
 --{{---| TaskWarrior widget |-----------------------------------------------------------------------
 
-task_warrior = blingbling.task_warrior.new(beautiful.widget_task)
-task_warrior:set_task_done_icon(beautiful.task_done_icon)
-task_warrior:set_task_icon(beautiful.task_icon)
-task_warrior:set_project_icon(beautiful.project_icon)
+--task_warrior = blingbling.task_warrior.new(beautiful.widget_task)
+--task_warrior:set_task_done_icon(beautiful.task_done_icon)
+--task_warrior:set_task_icon(beautiful.task_icon)
+--task_warrior:set_project_icon(beautiful.project_icon)
 
 --{{---| MEM widget |-------------------------------------------------------------------------------
 
@@ -379,7 +379,7 @@ terminal   = "terminal --geometry=130x56-10+26"})
 
 fswidget = widget({ type = "textbox" })
 vicious.register(fswidget, vicious.widgets.fs,
-'<span background="#D0785D" font="Terminus 12"> <span font="Terminus 9" color="#EEEEEE">${/mnt/storage avail_gb}GB </span></span>', 8)
+'<span background="#D0785D" font="Terminus 12"> <span font="Terminus 9" color="#EEEEEE">${/home avail_gb}GB </span></span>', 8)
 udisks_glue = blingbling.udisks_glue.new(beautiful.widget_hdd)
 udisks_glue:set_mount_icon(beautiful.accept)
 udisks_glue:set_umount_icon(beautiful.cancel)
@@ -401,7 +401,7 @@ vicious.register( batwidget, vicious.widgets.bat, '<span background="#92B0A0" fo
 netwidget = widget({ type = "textbox" })
 vicious.register(netwidget, 
 vicious.widgets.net,
-'<span background="#C2C2A4" font="Terminus 12"> <span font="Terminus 9" color="#FFFFFF">${eth0 down_kb} ↓↑ ${eth0 up_kb}</span> </span>', 3)
+'<span background="#C2C2A4" font="Terminus 12"> <span font="Terminus 9" color="#FFFFFF">${eth0 down_kb} ↓↑ ${wlan0 up_kb}</span> </span>', 3)
 neticon = widget ({type = "imagebox" })
 neticon.image = image(beautiful.widget_net)
 netwidget:buttons(awful.util.table.join(awful.button({ }, 1,
@@ -491,15 +491,15 @@ binarytimer:start()
 
 --{{---| Calendar widget |--------------------------------------------------------------------------
 
--- my_cal = blingbling.calendar.new({type = "imagebox", image = beautiful.widget_cal})
--- my_cal:set_cell_padding(4)
--- my_cal:set_title_font_size(9)
--- my_cal:set_title_text_color("#4F98C1")
--- my_cal:set_font_size(9)
--- my_cal:set_inter_margin(1)
--- my_cal:set_columns_lines_titles_font_size(8)
--- my_cal:set_columns_lines_titles_text_color("#d4aa00ff")
--- my_cal:set_link_to_external_calendar(true) --{{ <-- popup reminder
+my_cal = blingbling.calendar.new({type = "imagebox", image = beautiful.widget_cal})
+my_cal:set_cell_padding(4)
+my_cal:set_title_font_size(9)
+my_cal:set_title_text_color("#4F98C1")
+my_cal:set_font_size(9)
+my_cal:set_inter_margin(1)
+my_cal:set_columns_lines_titles_font_size(8)
+my_cal:set_columns_lines_titles_text_color("#d4aa00ff")
+my_cal:set_link_to_external_calendar(true) --{{ <-- popup reminder
 
 --{{---| Separators widgets |-----------------------------------------------------------------------
 
@@ -542,8 +542,8 @@ mywibox[s].widgets = {
      spr3f,
      binaryclock.widget,
      spr3f, 
-     -- arrl, 
-     -- my_cal.widget,
+     arrl, 
+     my_cal.widget,
      arr2, 
      netwidget,
      neticon,
@@ -562,12 +562,12 @@ mywibox[s].widgets = {
      arr7,
      memwidget,
      memicon,
-     arr8,
-     task_warrior.widget,
+     --arr8,
+     --task_warrior.widget,
      arr9,
      music,
-     arr0,
-     mailicon, 
+     --arr0,
+     --mailicon, 
      arr9,
      spr,
      s == 1 and mysystray, spr or nil, mytasklist[s], 
@@ -645,7 +645,7 @@ awful.key({ modkey },            "i",        function () awful.util.spawn_with_s
 awful.key({ modkey },            "b",        function () awful.util.spawn_with_shell("~/Tools/rubymine.run") end),
 awful.key({ modkey },            "`",        function () awful.util.spawn_with_shell("xwinmosaic") end),
 awful.key({ modkey, "Control" }, "m",        function () awful.util.spawn_with_shell(musicplr) end),
-awful.key({ }, "XF86Calculator",             function () awful.util.spawn_with_shell("gcalctool") end),
+awful.key({ }, "XF86Calculator",             function () awful.util.spawn_with_shell("xcalc") end),
 awful.key({ }, "XF86Sleep",                  function () awful.util.spawn_with_shell("sudo pm-hibernate") end),
 awful.key({ }, "XF86AudioPlay",              function () awful.util.spawn_with_shell("ncmpcpp toggle") end),
 awful.key({ }, "XF86AudioStop",              function () awful.util.spawn_with_shell("ncmpcpp stop") end),
