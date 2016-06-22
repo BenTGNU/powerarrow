@@ -40,22 +40,16 @@ beautiful.init(themes_dir .. "/powerarrow/theme.lua")
 --{{---| Variables |--------------------------------------------------------------------------------
 
 modkey        = "Mod4"
-terminal      = "terminal --geometry=164x50+101+60"
+terminal      = "urxvtcd --geometry=164x50+101+60"
 terminalr     = "sudo terminal --default-working-directory=/root/ --geometry=200x49+80+36"
-configuration = "TERM=screen-256color lilyterm -T 'Awesome Configuration' -g 228x62+0+16 -x ~/.gem/ruby/1.9.1/bin/mux start configuration"
-rttmux        = "sudo terminal --geometry=220x59+20+36 --default-working-directory=/root/ -x tmux -2"
-ttmux         = "lilyterm -T tmux -g 221x60+20+36 -e tmux -2"
-tetmux        = "terminal --geometry=189x54+20+36 -x tmux -2"
-sakura        = "sakura -c 222 -r 60 --geometry=+15+30"
-lilyterm      = "lilyterm -g 221x60+20+36"
-musicplr      = "lilyterm -T Music -g 130x34-320+16 -e ncmpcpp"
-iptraf        = "lilyterm -T 'IP traffic monitor' -g 180x54-20+34 -e sudo iptraf-ng -i all"
-mailmutt      = "lilyterm -T 'Mutt' -g 140x44-20+34 -e mutt"
-chat          = "TERM=screen-256color lilyterm -T 'Chat' -g 228x62+0+16 -x ~/.gem/ruby/1.9.1/bin/mux start chat"
+musicplr      = terminal .. " -g 130x34-320+16 -e ncmpcpp"
+iptraf        = terminal .. " -g 180x54-20+34 -e sudo iptraf-ng -i all"
+mailmutt      = terminal .. " -g 140x44-20+34 -e mutt"
+--chat          = "TERM=screen-256color lilyterm -T 'Chat' -g 228x62+0+16 -x ~/.gem/ruby/1.9.1/bin/mux start chat"
 editor        = os.getenv("EDITOR") or "vim"
 editor_cmd    = terminal .. " -e " .. editor
-browser       = "firefox"
-fm            = "spacefm"
+browser       = "conkeror"
+fm            = "xfe"
 
 --{{---| Couth Alsa volume applet |-----------------------------------------------------------------
 
@@ -179,13 +173,12 @@ mygraphicsmenu = {
 
 mymultimediamenu = {
   {" Audacious",            "audacious", beautiful.audacious_icon},
-  {" DeadBeef",             "deadbeef", beautiful.deadbeef_icon},
+  {" NcMpcpp",              "urxvtcd -g 130x34-320+16 -e ncmpcpp", beautiful.ncmpcpp_icon},
   {" UMPlayer",             "umplayer", beautiful.umplayer_icon},
   {" VLC",                  "vlc", beautiful.vlc_icon}
 }
 
 myofficemenu = {
-  {" Acrobat Reader",       "acroread", beautiful.acroread_icon},
   {" DjView",               "djview", beautiful.djview_icon},
   {" KChmViewer",           "kchmviewer", beautiful.kchmviewer_icon},
   {" Leafpad",              "leafpad", beautiful.leafpad_icon},
@@ -195,47 +188,29 @@ myofficemenu = {
   {" LibreOffice Impress",  "libreoffice --impress", beautiful.libreimpress_icon},
   {" LibreOffice Math",     "libreoffice --math", beautiful.libremath_icon},	
   {" LibreOffice Writer",   "libreoffice --writer", beautiful.librewriter_icon},
-  {" Qpdfview",             "qpdfview", beautiful.qpdfview_icon},
-  {" ScanTailor",           "scantailor", beautiful.scantailor_icon},
-  {" Sigil",                "sigil", beautiful.sigil_icon}, 
-  {" TeXworks",             "texworks", beautiful.texworks_icon}
+  {" Xpdf",             "xpdf", beautiful.qpdfview_icon},
+  {" LyX",             "texworks", beautiful.texworks_icon}
 }
 
 mywebmenu = {
-  {" Chromium",             "chromium-browser", beautiful.chromium_icon},
-  {" Droppox",              "dropbox", beautiful.dropbox_icon},
-  {" Dwb",                  "dwb", beautiful.dwb_icon},
-  {" Filezilla",            "filezilla", beautiful.filezilla_icon},
-  {" Firefox",              "firefox", beautiful.firefox_icon},
-  {" Gajim",                "gajim", beautiful.gajim_icon},
-  {" QuiteRSS",             "quiterss", beautiful.quiterss_icon},
-  {" Luakit",               "luakit", beautiful.luakit_icon},
-  {" Opera",                "opera", beautiful.opera_icon},
-  {" Qbittorrent",          "qbittorrent", beautiful.qbittorrent_icon},
-  {" Skype",                "skype", beautiful.skype_icon},
-  {" Tor",                  "/home/rom/Tools/tor-browser_en-US/start-tor-browser", beautiful.vidalia_icon},
-  {" Thunderbird",          "thunderbird", beautiful.thunderbird_icon},
-  {" Weechat",              "lilyterm -x weechat-curses", beautiful.weechat_icon}
+  {" IceWeasel",            "iceweasel", beautiful.firefox_icon},
+  {" Conkeror",             "conkeror", beautiful.conkeror_icon},
+  {" Claws-Mail",           "claws-mail", beautiful.claws-mail_icon},
+  {" Psi+",                 "psi-plus", beautiful.psi-plus_icon},
+  {" gFTP",                 "gftp", beautiful.filezilla_icon},
+  {" Tor",                  "vidalia", beautiful.vidalia_icon}
+  --{" Weechat",              "lilyterm -x weechat-curses", beautiful.weechat_icon}
 }
 
 mysettingsmenu = {
   {" CUPS Settings",        "sudo system-config-printer", beautiful.cups_icon},
-  {" JDK6 Settings",        "/opt/sun-jdk-1.6.0.37/bin/ControlPanel", beautiful.java_icon},
-  {" JDK7 Settings",        "/opt/oracle-jdk-bin-1.7.0.9/bin/ControlPanel", beautiful.java_icon},
-  {" Nvidia Settings",      "sudo nvidia-settings", beautiful.nvidia_icon},
-  {" Qt Configuration",     "qtconfig", beautiful.qt_icon},    
+  --{" JDK6 Settings",        "/opt/sun-jdk-1.6.0.37/bin/ControlPanel", beautiful.java_icon},
+  --{" JDK7 Settings",        "/opt/oracle-jdk-bin-1.7.0.9/bin/ControlPanel", beautiful.java_icon},
   {" WICD",                 terminal .. " -x wicd-curses", beautiful.wicd_icon}
 }
 
 mytoolsmenu = {
-  {" Gparted",              "sudo gparted", beautiful.gparted_icon},
-  {" PeaZip",               "peazip", beautiful.peazip_icon},
-  {" TeamViewer",           "/home/rom/Tools/teamviewer7/teamviewer", beautiful.teamviewer_icon},
-  {" VirtualBox",           "VirtualBox", beautiful.virtualbox_icon},
-  {" Windows XP",           'VirtualBox --startvm "cb226b1a-3e7a-4a5c-b336-fc080ff687d1"', beautiful.windows_icon},
-  -- {" Vmware Workstation",   "vmware", beautiful.vmware_icon},
-  {" UNetbootin",           "sudo unetbootin", beautiful.unetbootin_icon},
-  {" Xfburn",               "xfburn", beautiful.xfburn_icon}
+  {" Gparted",              "sudo gparted", beautiful.gparted_icon}
 }
 
 mymainmenu = awful.menu({ items = { 
@@ -319,10 +294,10 @@ for s = 1, screen.count() do
 
 --{{---| Chat widget |------------------------------------------------------------------------------
 
-chaticon = widget ({type = "imagebox" })
-chaticon.image = image(beautiful.widget_chat)
-chaticon:buttons(awful.util.table.join(awful.button({ }, 1,
-function () awful.util.spawn_with_shell(chat) end)))
+--chaticon = widget ({type = "imagebox" })
+--chaticon.image = image(beautiful.widget_chat)
+--chaticon:buttons(awful.util.table.join(awful.button({ }, 1,
+--function () awful.util.spawn_with_shell(chat) end)))
 
 --{{---| Mail widget |------------------------------------------------------------------------------
 
@@ -600,15 +575,8 @@ globalkeys = awful.util.table.join(
 
 --{{---| Terminals, shells und multiplexors |---------------------------------------------------------\-\\
                                                                                                         --
-awful.key({ modkey },            "a",        function () awful.util.spawn_with_shell(configuration) end), --
-awful.key({        },            "Menu",     function () awful.util.spawn(ttmux) end),                    --
-awful.key({ modkey,           }, "Return",   function () awful.util.spawn(terminal) end),                 --
-awful.key({ modkey, "Control" }, "Return",   function () awful.util.spawn(terminalr) end),                --
-awful.key({ modkey, "Shift"   }, "Return",   function () awful.util.spawn(sakura) end),                   --
-awful.key({ modkey, "Control" }, "t",        function () awful.util.spawn(rttmux) end),                   --
-awful.key({ modkey },            "t",        function () awful.util.spawn(tetmux) end),                   --
-awful.key({ modkey,           }, "z",        function () awful.util.spawn(terminal .. " -x zsh") end),    --
-awful.key({ modkey, "Shift"   }, "z",        function () awful.util.spawn(terminalr .. " -x zsh") end),   --
+awful.key({ modkey,         }, "t",   function () awful.util.spawn(terminal) end),                      --
+awful.key({ modkey, "Shift" }, "t",   function () awful.util.spawn(terminalr) end),                     --
                                                                                                         --
 --{{--------------------------------------------------------------------------------------------------/-//
 
@@ -625,8 +593,8 @@ awful.key({ modkey, "Control" }, "l",        function () awful.tag.incncol(-1)  
 awful.key({ modkey,           }, "space",    function () awful.layout.inc(layouts,  1) end),
 awful.key({ modkey, "Shift"   }, "space",    function () awful.layout.inc(layouts, -1) end),
 awful.key({ modkey,           }, "x",        function () awful.util.spawn("xmind") end),
-awful.key({ modkey, "Shift"   }, "x",        function () awful.util.spawn("sudo xfe") end),
-awful.key({ modkey,           }, "s",        function () awful.util.spawn("spacefm") end),
+awful.key({ modkey, "Shift"   }, "e",        function () awful.util.spawn("sudo xfe") end),
+awful.key({ modkey,           }, "e",        function () awful.util.spawn("xfe") end),
 awful.key({ modkey },            "v",        function () awful.util.spawn_with_shell("gvim -geometry 92x58+710+24") end),    
 awful.key({ modkey },            "Menu",     function () awful.util.spawn_with_shell("gmrun") end),
 awful.key({ modkey },            "d",        function () awful.util.spawn_with_shell("goldendict") end),
