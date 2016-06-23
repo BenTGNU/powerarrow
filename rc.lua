@@ -1,9 +1,18 @@
+-- Standard awesome library
 require("awful")
 require("awful.autofocus")
 require("awful.rules")
+-- Theme handling library
 require("beautiful")
+-- Dynamic Tagging
+require("eminent")
+-- Notification library
 require("naughty")
+-- Load Debian menu entries
+require("debian.menu")
+-- Widgets library
 require("vicious")
+-- Sound library
 require('couth.couth')
 require('couth.alsa')
 require("blingbling")
@@ -63,7 +72,8 @@ layouts =
   awful.layout.suit.tile,
   awful.layout.suit.tile.left,
   awful.layout.suit.tile.bottom,
-  awful.layout.suit.tile.top
+  awful.layout.suit.tile.top,
+  awful.layout.suit.max
 }
 
 --{{---| Naughty theme |----------------------------------------------------------------------------
@@ -78,118 +88,53 @@ naughty.config.presets.critical.opacity    = 0.8
 
 --{{---| Tags |-------------------------------------------------------------------------------------
 
-tags = {}
+tags = {
+  names = {  "main", "term", "office", "www", "im", "game", "sys" },
+  layout = { layouts[1], layouts[2], layouts[6], layouts[1], layouts[6], layouts[6], layouts[1]}
+  }
 for s = 1, screen.count() do
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5 }, s, layouts[1])
+    tags[s] = awful.tag(tags.names, s, tags.layout)
 end
 
 --{{---| Menu |-------------------------------------------------------------------------------------
 
 myawesomemenu = {
-  {"edit config",           "terminal -x emacsclient -t $HOME/.config/awesome/rc.lua"},
-  {"edit theme",            "terminal -x emacsclient -t $HOME/.config/awesome/themes/powerarrow/theme.lua"},
-  {"hibernate",             "sudo pm-hibernate"},
+  {"manual",               terminal .. " -e man awesome" },
+  {"edit config",           terminal .. " -e emacsclient -t $HOME/.config/awesome/rc.lua"},
+  {"edit theme",            terminal .. " -e emacsclient -t $HOME/.config/awesome/themes/powerarrow/theme.lua"},
   {"restart",               awesome.restart },
-  {"reboot",                "sudo reboot"},
-  {"quit",                  awesome.quit }
-}
-
-docsmenu = {
-  {" C",                    "/home/rom/Tools/doc_c", beautiful.c_icon},
-  {" JavaScript",           "/home/rom/Tools/doc_js", beautiful.js_icon},
-  {" Ruby",                 "/home/rom/Tools/doc_ruby", beautiful.ruby_icon} 
-}
-
-learningmenu = {
-  {" C",                    "/home/rom/Books/C.sh", beautiful.c_icon},
-  {" JavaScript",           "/home/rom/Books/JavaScrip.sh", beautiful.js_icon},
-  {" Ruby On Rails",        "/home/rom/Books/RubyOnRails.sh", beautiful.ruby_icon}
-}
-
-mybooksmenu = {
-  {" Documentation",        docsmenu, beautiful.docsmenu_icon},
-  {" Learning",             learningmenu, beautiful.learning_icon},
-  {"                                                            "}, 
-  {" Assembler",            fm .. " ~/Books/Assembler/", beautiful.assembler_icon},
-  {" C",                    fm .. " ~/Books/C/", beautiful.c_icon},
-  {" C++",                  fm .. " ~/Books/C++/", beautiful.cpp_icon},
-  {" D",                    fm .. " ~/Books/D/", beautiful.dlang_icon},
-  {" Databases",            fm .. " ~/Books/Databases/", beautiful.databases_icon},
-  {" Erlang",               fm .. " ~/Books/Erlang/", beautiful.erlang_icon},
-  {" Java",                 fm .. " ~/Books/Java/", beautiful.java_icon},
-  {" JavaScript",           fm .. " ~/Books/JavaScript/", beautiful.js_icon},
-  {" Linux",                fm .. " ~/Books/Linux/", beautiful.linux_icon},
-  {" Markup",               fm .. " ~/Books/HTML-CSS-XML/", beautiful.markup_icon},
-  {" Misc",                 fm .. " ~/Books/Misc/"},
-  {" Mobile Apps",          fm .. " ~/Books/Mobile-Apps/", beautiful.androidmobile_icon},
-  {" Objective-C",          fm .. " ~/Books/Objective-C/"},
-  {" Python",               fm .. " ~/Books/Python/", beautiful.py_icon},
-  {" Regexp",               fm .. " ~/Books/Regexp/"},
-  {" Ruby",                 fm .. " ~/Books/Ruby/", beautiful.ruby_icon},
-  {" VCS",                  fm .. " ~/Books/VCS"}
+  {"exit",                  awesome.quit }
+  {"quit", '/home/pengu/.config/scripts/shutdown_dialog.sh'}
 }
 
 myedumenu = {
-  {" Anki",                 "anki", beautiful.anki_icon},
-  -- {" Celestia",             "celestia", beautiful.celestia_icon},
+
   -- {" Geogebra",             "geogebra", beautiful.geogebra_icon},
-  {" CherryTree",           "cherrytree", beautiful.cherrytree_icon},
-  {" Free42dec",            "/home/rom/Tools/Free42Linux/gtk/free42dec", beautiful.free42_icon},
-  {" GoldenDict",           "goldendict", beautiful.goldendict_icon},
-  {" Qalculate",            "qalculate-gtk", beautiful.qalculate_icon},
-  {" Stellarium",           "stellarium", beautiful.stellarium_icon},
-  {" Vym",                  "vym", beautiful.vym_icon},
-  {" Wolfram Mathematica",  "/home/rom/Tools/Wolfram/Mathematica", beautiful.mathematica_icon},
-  {" XMind",                "xmind", beautiful.xmind_icon}
+  {" FreeMind",             "freemind", beautiful.freemind_icon},
+  {" GRAMPS",               "gramps", beautiful.gramps_icon},
 }
 
 mydevmenu = {
-  {" Android SDK Updater",  "android", beautiful.android_icon},
-  {" Eclipse",              "/home/rom/Tools/eclipse/eclipse", beautiful.eclipse_icon},
   {" Emacs",                "emacs", beautiful.emacs_icon},
-  {" GHex",                 "ghex", beautiful.ghex_icon},	
-  {" IntellijIDEA",         "/home/rom/Tools/idea-IU-123.72/bin/idea.sh", beautiful.ideaUE_icon},
-  {" Kdiff3",               "kdiff3", beautiful.kdiff3_icon},
-  {" Meld",                 "meld", beautiful.meld_icon},
-  {" pgAdmin",              "pgadmin3", beautiful.pgadmin3_icon},
-  {" Qt Creator",           "qtcreator", beautiful.qtcreator_icon},
-  {" RubyMine",             "/home/rom/Tools/rubymine.run", beautiful.rubymine_icon},
-  {" SublimeText",          "sublime_text", beautiful.sublime_icon},
-  {" Tkdiff",               "tkdiff", beautiful.tkdiff_icon}
+  {" Meld",                 "meld", beautiful.meld_icon}
 }
 
 mygraphicsmenu = {
-  {" Character Map",        "gucharmap", beautiful.gucharmap_icon},
-  {" Fonty Python",         "fontypython", beautiful.fontypython_icon},
-  {" gcolor2",              "gcolor2", beautiful.gcolor_icon},
-  {" Gpick",                "gpick", beautiful.gpick_icon},
-  {" Gimp",                 "gimp", beautiful.gimp_icon},
-  {" Inkscape",             "inkscape", beautiful.inkscape_icon},
-  {" recordMyDesktop",      "gtk-recordMyDesktop", beautiful.recordmydesktop_icon},
-  {" Screengrab",           "screengrab", beautiful.screengrab_icon},
-  {" Xmag",                 "xmag", beautiful.xmag_icon},
-  {" XnView",               "/home/rom/Tools/XnView/xnview.sh", beautiful.xnview_icon}
+  {" Gimp",                 "gimp", beautiful.gimp_icon}
+  --{" Inkscape",             "inkscape", beautiful.inkscape_icon},
 }
 
 mymultimediamenu = {
-  {" Audacious",            "audacious", beautiful.audacious_icon},
   {" NcMpcpp",              "urxvtcd -g 130x34-320+16 -e ncmpcpp", beautiful.ncmpcpp_icon},
-  {" UMPlayer",             "umplayer", beautiful.umplayer_icon},
-  {" VLC",                  "vlc", beautiful.vlc_icon}
+  {" MPlayer",             "mplayer", beautiful.umplayer_icon}
 }
 
 myofficemenu = {
-  {" DjView",               "djview", beautiful.djview_icon},
-  {" KChmViewer",           "kchmviewer", beautiful.kchmviewer_icon},
-  {" Leafpad",              "leafpad", beautiful.leafpad_icon},
-  {" LibreOffice Base",     "libreoffice --base", beautiful.librebase_icon},
-  {" LibreOffice Calc",     "libreoffice --calc", beautiful.librecalc_icon},
-  {" LibreOffice Draw",     "libreoffice --draw", beautiful.libredraw_icon},
-  {" LibreOffice Impress",  "libreoffice --impress", beautiful.libreimpress_icon},
-  {" LibreOffice Math",     "libreoffice --math", beautiful.libremath_icon},	
-  {" LibreOffice Writer",   "libreoffice --writer", beautiful.librewriter_icon},
-  {" Xpdf",             "xpdf", beautiful.qpdfview_icon},
-  {" LyX",             "texworks", beautiful.texworks_icon}
+  {" Abiword",              "abiword", beautiful.abiword_icon},
+  {" Gnumeric",             "gnumeric", beautiful.gnumeric_icon},
+  {" GnuCash",              "gnucash", beautiful.gnucash_icon},
+  {" LyX",                  "lyx", beautiful.texworks_icon},
+  {" Xpdf",                 "xpdf", beautiful.qpdfview_icon}
 }
 
 mywebmenu = {
@@ -214,8 +159,8 @@ mytoolsmenu = {
 }
 
 mymainmenu = awful.menu({ items = { 
-  { " @wesome",             myawesomemenu, beautiful.awesome_icon },
-  {" books",                mybooksmenu, beautiful.books_icon},
+  {" @wesome",              myawesomemenu, beautiful.awesome_icon },
+  {" Debian",            debian.menu.Debian_menu.Debian,beautiful.awesome_icon },
   {" development",          mydevmenu, beautiful.mydevmenu_icon},
   {" education",            myedumenu, beautiful.myedu_icon},
   {" graphics",             mygraphicsmenu, beautiful.mygraphicsmenu_icon},
@@ -224,10 +169,10 @@ mymainmenu = awful.menu({ items = {
   {" tools",                mytoolsmenu, beautiful.mytoolsmenu_icon},
   {" web",                  mywebmenu, beautiful.mywebmenu_icon},
   {" settings",             mysettingsmenu, beautiful.mysettingsmenu_icon},
-  {" calc",                 "/usr/bin/gcalctool", beautiful.galculator_icon},
+  {" calc",                 "xcalc", beautiful.galculator_icon},
   {" htop",                 terminal .. " -x htop", beautiful.htop_icon},
-  {" sound",                "qasmixer", beautiful.wmsmixer_icon},
-  {" file manager",         "spacefm", beautiful.spacefm_icon},
+  {" sound",                "pavucontrol", beautiful.wmsmixer_icon},
+  {" file manager",         "xfe", beautiful.spacefm_icon},
   {" root terminal",        "sudo " .. terminal, beautiful.terminalroot_icon},
   {" terminal",             terminal, beautiful.terminal_icon} 
 }
