@@ -104,7 +104,7 @@ myawesomemenu = {
   {"edit theme",            terminal .. " -e emacsclient -t $HOME/.config/awesome/themes/powerarrow/theme.lua"},
   {"restart",               awesome.restart },
   {"exit",                  awesome.quit }
-  {"quit", '/home/pengu/.config/scripts/shutdown_dialog.sh'}
+  {"quit",                  '$HOME/.config/scripts/shutdown_dialog.sh'}
 }
 
 myedumenu = {
@@ -605,21 +605,101 @@ root.keys(globalkeys)
 --{{---| Rules |------------------------------------------------------------------------------------
 
 awful.rules.rules = {
+    -- All clients will match this rule.
     { rule = { },
-    properties = { size_hints_honor = false,
-    border_width = beautiful.border_width,
-    border_color = beautiful.border_normal,
-    focus = true,
-    keys = clientkeys,
-    buttons = clientbuttons } },
-    { rule = { class = "goldendict" },
-    properties = { floating = true } },
-    { rule = { class = "audacious" },
-    properties = { floating = true } },
-    { rule = { class = "xwinmosaic" },
-    properties = { floating = true } },
+      properties = { border_width = beautiful.border_width,
+                     border_color = beautiful.border_normal,
+                     focus = true,
+                     size_hints_honor = false,
+                     keys = clientkeys,
+                     buttons = clientbuttons } },
+    { rule = { class = "MPlayer" },
+      properties = { floating = true } },
+    { rule = { class = "pinentry" },
+      properties = { floating = true } },
     { rule = { class = "gimp" },
-    properties = { floating = true } },
+      properties = { floating = true } },
+    -- Set Custom rule for mapping program to specific tag
+    { rule = { instance = "xfe" },
+      properties = { tag = tags[1][1] } },
+    { rule = { class = "Shotwell" },
+      properties = { tag = tags[1][1], maximized_vertical = true, maximized_horizontal = true } },
+    { rule = { class = "URxvt" },
+      properties = { tag = tags[1][2] } },
+    { rule = { class = "Emacs", instance = "emacs" },
+      properties = { tag = tags[1][3] } },
+    { rule = { class = "Abiword" , instance = "abiword" },
+      properties = { tag = tags[1][3] } },
+    { rule = { class = "Gnumeric" , instance = "gnumeric" },
+      properties = { tag = tags[1][3] } },
+    { rule = { class = "Gramps" },
+      properties = { tag = tags[1][3] } },
+    { rule = { class = "FreeMind" },
+      properties = { tag = tags[1][3] } },
+    { rule = { instance = "gnucash" },
+      properties = { tag = tags[1][3] } },
+    { rule = { instance = "lyx"},
+      properties = { tag = tags[1][3] } },
+    { rule = { class = "Gimp" },
+      properties = { tag = tags[1][3] } },
+    { rule = { class = "Xpdf" },
+      properties = { tag = tags[1][3] } },
+    { rule = { class = "Iceweasel" },
+      properties = { tag = tags[1][4], maximized_vertical = true, maximized_horizontal = true } },
+    { rule = { class = "Xombrero"},
+      properties = { tag = tags[1][4], maximized_vertical = true, maximized_horizontal = true } },
+    { rule = { instance = "conkeror"},
+      properties = { tag = tags[1][4], maximized_vertical = true, maximized_horizontal = true } },
+    { rule = { class = "Claws-Mail" },
+      properties = { tag = tags[1][4], maximized_vertical = true, maximized_horizontal = true } },
+    { rule = { class = "Psi+" , instance = "psi-plus" },
+      properties = { tag = tags[1][5] } },
+    { rule = { instance = "qutecom"},
+      properties = { tag = tags[1][5] } },
+    { rule = { instance = "xchat" },
+      properties = { tag = tags[1][5], maximized_vertical = true, maximized_horizontal = true } },
+    { rule = { instance = "freecraft" },
+      properties = { tag = tags[1][6] } },
+    { rule = { instance = "freeciv" },
+      properties = { tag = tags[1][6] } },
+    { rule = { instance = "freedoom" },
+      properties = { tag = tags[1][6] } },
+    { rule = { instance = "xboard" },
+      properties = { tag = tags[1][6] } },
+    { rule = { class = "Pychess" },
+      properties = { tag = tags[1][6] } },
+    { rule = { instance = "dosbox"},
+      properties = { tag = tags[1][6] } },
+    { rule = { instance = "teeworlds" },
+      properties = { tag = tags[1][6] } },
+    { rule = { instance = "pingus" },
+      properties = { tag = tags [1][6] } },
+    { rule = { instance = "bsnes" },
+      properties = { tag = tags [1][6] } },
+    { rule = { instance = "gngb" },
+      properties = { tag = tags [1][6] } },
+    { rule = { instance = "keepassx" },
+      properties = { tag = tags[1][1] } },
+    { rule = { class = "Bleachbit" },
+      properties = { tag = tags[1][7], maximized_vertical = true, maximized_horizontal = true } },
+    { rule = { class = "Gourmet"},
+      properties = { tag = tags[1][3] } },
+    { rule = { class = "gFTP" },
+      properties = { tag = tags[1][7], maximized_vertical = true, maximized_horizontal = true } },
+    { rule = { class = "Grsync" },
+      properties = { tag = tags[1][7] } },
+--    { rule = { class = "Sakura", instance = "sakura" },
+--      properties = { tag = tags[1][7] } },
+    { rule = { class = "Uget" },
+      properties = { tag = tags[1][7] } },
+    { rule = { class = "Nitrogen" },
+      properties = { tag = tags[1][7] } },
+    { rule = { instance = "system-config-printer" },
+      properties = { tag = tags[1][7] } },
+    { rule = { instance = "gparted" },
+      properties = { tag = tags[1][7], maximized_vertical = true, maximized_horizontal = true } },
+    { rule = { class = "Synaptic" },
+      properties = { tag = tags[1][7], maximized_vertical = true, maximized_horizontal = true } },
 }
 
 --{{---| Signals |----------------------------------------------------------------------------------
@@ -646,13 +726,11 @@ function run_oncewa(prg) if not prg then do return nil end end
 
 --{{--| Autostart |---------------------------------------------------------------------------------
 
-os.execute("pkill compton")
-os.execute("setxkbmap -layout 'us,ru' -variant 'winkeys' -option 'grp:caps_toggle,grp_led:caps,compose:ralt' &")
+--os.execute("pkill compton")
 run_once("udisks-glue")
 -- os.execute("sudo /etc/init.d/dcron start &")
-run_once("kbdd")
-run_once("qlipper")
-run_once("compton")
+--run_once("compton")
+run_once("$HOME/.config/awesome/autostart.sh")
 
 --{{Xx----------------------------------------------------------------------------------------------
 
