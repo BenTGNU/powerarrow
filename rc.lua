@@ -15,6 +15,7 @@ require("vicious")
 -- Sound library
 require('couth.couth')
 require('couth.alsa')
+require("oocairo")
 require("blingbling")
 
 --{{---| Java GUI's fix |---------------------------------------------------------------------------
@@ -42,7 +43,7 @@ end
 
 --{{---| Theme |------------------------------------------------------------------------------------
 
-config_dir = ("$HOME/.config/awesome/")
+config_dir = ("~/.config/awesome")
 themes_dir = (config_dir .. "/themes")
 beautiful.init(themes_dir .. "/powerarrow/theme.lua")
 
@@ -99,16 +100,15 @@ end
 --{{---| Menu |-------------------------------------------------------------------------------------
 
 myawesomemenu = {
-  {"manual",               terminal .. " -e man awesome" },
+  {"manual",                terminal .. " -e man awesome" },
   {"edit config",           terminal .. " -e emacsclient -t $HOME/.config/awesome/rc.lua"},
   {"edit theme",            terminal .. " -e emacsclient -t $HOME/.config/awesome/themes/powerarrow/theme.lua"},
   {"restart",               awesome.restart },
-  {"exit",                  awesome.quit }
+  {"exit",                  awesome.quit },
   {"quit",                  '$HOME/.config/scripts/shutdown_dialog.sh'}
 }
 
 myedumenu = {
-
   -- {" Geogebra",             "geogebra", beautiful.geogebra_icon},
   {" FreeMind",             "freemind", beautiful.freemind_icon},
   {" GRAMPS",               "gramps", beautiful.gramps_icon},
@@ -140,8 +140,8 @@ myofficemenu = {
 mywebmenu = {
   {" IceWeasel",            "iceweasel", beautiful.firefox_icon},
   {" Conkeror",             "conkeror", beautiful.conkeror_icon},
-  {" Claws-Mail",           "claws-mail", beautiful.claws-mail_icon},
-  {" Psi+",                 "psi-plus", beautiful.psi-plus_icon},
+  {" Claws-Mail",           "claws-mail", beautiful.clawsmail_icon},
+  {" Psi+",                 "psi-plus", beautiful.psiplus_icon},
   {" gFTP",                 "gftp", beautiful.filezilla_icon},
   {" Tor",                  "vidalia", beautiful.vidalia_icon}
   --{" Weechat",              "lilyterm -x weechat-curses", beautiful.weechat_icon}
@@ -319,7 +319,7 @@ vicious.register( batwidget, vicious.widgets.bat, '<span background="#92B0A0" fo
 --{{---| Net widget |-------------------------------------------------------------------------------
 
 netwidget = widget({ type = "textbox" })
-vicious.register(netwidget, 
+vicious.register(netwidget,
 vicious.widgets.net,
 '<span background="#C2C2A4" font="Terminus 12"> <span font="Terminus 9" color="#FFFFFF">${eth0 down_kb} ↓↑ ${wlan0 up_kb}</span> </span>', 3)
 neticon = widget ({type = "imagebox" })
@@ -331,17 +331,17 @@ function () awful.util.spawn_with_shell(iptraf) end)))
 
 binaryclock = {}
 binaryclock.widget = widget({type = "imagebox"})
-binaryclock.w = 42  
-binaryclock.h = 16  
-binaryclock.show_sec = true 
+binaryclock.w = 42
+binaryclock.h = 16
+binaryclock.show_sec = true
 binaryclock.color_active = beautiful.binclock_fga
 binaryclock.color_bg = beautiful.binclock_bg
 binaryclock.color_inactive = beautiful.binclock_fgi
 binaryclock.dotsize = math.floor(binaryclock.h / 5)
 binaryclock.step = math.floor(binaryclock.dotsize / 3)
-binaryclock.widget.image = image.argb32(binaryclock.w, binaryclock.h, nil) 
-if (binaryclock.show_sec) then binaryclock.timeout = 1 else binaryclock.timeout = 20 end 
-binaryclock.DEC_BIN = function(IN) 
+binaryclock.widget.image = image.argb32(binaryclock.w, binaryclock.h, nil)
+if (binaryclock.show_sec) then binaryclock.timeout = 1 else binaryclock.timeout = 20 end
+binaryclock.DEC_BIN = function(IN)
 local B,K,OUT,I,D=2,"01","",0
 while IN>0 do
 I=I+1
@@ -350,21 +350,21 @@ OUT=string.sub(K,D,D)..OUT
 end
 return OUT
 end
-binaryclock.paintdot = function(val,shift,limit) 
+binaryclock.paintdot = function(val,shift,limit)
 local binval = binaryclock.DEC_BIN(val)
 local l = string.len(binval)
-local height = 0 
+local height = 0
 if (l < limit) then
 for i=1,limit - l do binval = "0" .. binval end
 end
 for i=0,limit-1 do
 if (string.sub(binval,limit-i,limit-i) == "1") then
 binaryclock.widget.image:draw_rectangle(shift,
-binaryclock.h - binaryclock.dotsize - height, 
+binaryclock.h - binaryclock.dotsize - height,
 binaryclock.dotsize, binaryclock.dotsize, true, binaryclock.color_active)
 else
 binaryclock.widget.image:draw_rectangle(shift,
-binaryclock.h - binaryclock.dotsize - height, 
+binaryclock.h - binaryclock.dotsize - height,
 binaryclock.dotsize,binaryclock.dotsize, true, binaryclock.color_inactive)
 end
 height = height + binaryclock.dotsize + binaryclock.step
@@ -730,7 +730,7 @@ function run_oncewa(prg) if not prg then do return nil end end
 run_once("udisks-glue")
 -- os.execute("sudo /etc/init.d/dcron start &")
 --run_once("compton")
-run_once("$HOME/.config/awesome/autostart.sh")
+run_once("$HOME/.config/scripts/autostart.sh")
 
 --{{Xx----------------------------------------------------------------------------------------------
 
