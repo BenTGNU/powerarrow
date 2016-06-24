@@ -285,10 +285,10 @@ vicious.register(cpuwidget, vicious.widgets.cpu,
 '<span background="#4B696D" font="Terminus 12"> <span font="Terminus 9" color="#DDDDDD">$2% <span color="#888888">·</span> $3% </span></span>', 3)
 cpuicon = widget ({type = "imagebox" })
 cpuicon.image = image(beautiful.widget_cpu)
-sensors = widget({ type = "textbox" })
-vicious.register(sensors, vicious.widgets.sensors)
-tempicon = widget ({type = "imagebox" })
-tempicon.image = image(beautiful.widget_temp)
+--sensors = widget({ type = "textbox" })
+--vicious.register(sensors, vicious.widgets.sensors)
+--tempicon = widget ({type = "imagebox" })
+--tempicon.image = image(beautiful.widget_temp)
 blingbling.popups.htop(cpuwidget,
 { title_color = beautiful.notify_font_color_1, 
 user_color = beautiful.notify_font_color_2, 
@@ -314,7 +314,7 @@ udisks_glue.widget.resize = false
 baticon = widget ({type = "imagebox" })
 baticon.image = image(beautiful.widget_battery)
 batwidget = widget({ type = "textbox" })
-vicious.register( batwidget, vicious.widgets.bat, '<span background="#92B0A0" font="Terminus 12"> <span font="Terminus 9" color="#FFFFFF" background="#92B0A0">$1$2% </span></span>', 1, "BAT0" )
+vicious.register( batwidget, vicious.widgets.bat, '<span background="#92B0A0" font="Terminus 12"> <span font="Terminus 9" color="#FFFFFF" background="#92B0A0">$1$2% </span></span>', 1, "yeeloong-bat" )
 
 --{{---| Net widget |-------------------------------------------------------------------------------
 
@@ -474,20 +474,20 @@ mywibox[s].widgets = {
      fswidget,
      udisks_glue.widget,
      arr5,
-     sensors,
-     tempicon,
+--     sensors,
+--     tempicon,
      arr6,
      cpuwidget,
      cpuicon,
      arr7,
      memwidget,
      memicon,
-     --arr8,
-     --task_warrior.widget,
+     arr8,
+--     task_warrior.widget,
      arr9,
      music,
-     --arr0,
-     --mailicon, 
+     arr0,
+--     mailicon, 
      arr9,
      spr,
      s == 1 and mysystray, spr or nil, mytasklist[s], 
