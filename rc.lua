@@ -15,7 +15,7 @@ require("vicious")
 -- Sound library
 require('couth.couth')
 require('couth.alsa')
-require("oocairo")
+--require("oocairo")
 require("blingbling")
 
 --{{---| Java GUI's fix |---------------------------------------------------------------------------
@@ -43,7 +43,7 @@ end
 
 --{{---| Theme |------------------------------------------------------------------------------------
 
-config_dir = ("~/.config/awesome")
+config_dir = ("/home/pengu/.config/awesome")
 themes_dir = (config_dir .. "/themes")
 beautiful.init(themes_dir .. "/powerarrow/theme.lua")
 
